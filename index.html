@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine Tanya Marian</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --lavender:#efe9f8;
+  --soft-plum:#e2d6f3;
+  --deep-plum:#b79edc;
+  --text:#2b2236;
+  --muted:#8e7fa8;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Inter",system-ui;
+  background:linear-gradient(180deg,var(--lavender),var(--soft-plum));
+  color:var(--text);
+}
+
+.container{
+  max-width:560px;
+  margin:auto;
+  padding:36px 18px 110px;
+}
+
+/* HEADER */
+.header{
+  text-align:center;
+  background:linear-gradient(135deg,#f3ecfb,#dcd0f0);
+  border-radius:26px;
+  padding:48px 24px;
+  margin-bottom:46px;
+  box-shadow:0 25px 50px rgba(90,70,140,.08);
+}
+.header h1{
+  margin:0;
+  font-family:"Playfair Display",serif;
+  font-size:34px;
+  letter-spacing:1px;
+}
+.header p{
+  margin-top:12px;
+  font-size:15px;
+  color:var(--muted);
+  letter-spacing:1px;
+}
+
+/* CARD */
+.card{
+  background:#ffffffee;
+  border-radius:24px;
+  padding:26px 22px;
+  margin-bottom:38px;
+  box-shadow:0 18px 45px rgba(90,70,140,.06);
+}
+.card h3{
+  font-size:13px;
+  letter-spacing:2px;
+  margin:0 0 18px;
+  color:var(--muted);
+  font-weight:500;
+}
+
+/* SLIDESHOW */
+.rail{
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.rail::-webkit-scrollbar{display:none}
+.rail img{
+  width:300px;
+  height:400px;
+  border-radius:22px;
+  object-fit:cover;
+  scroll-snap-align:center;
+  flex-shrink:0;
+}
+
+/* MESSAGE */
+.message{
+  font-size:16px;
+  line-height:1.9;
+}
+
+/* AUDIO */
+.audio-wrap{
+  display:flex;
+  justify-content:center;
+}
+.audio-btn{
+  padding:15px 52px;
+  border-radius:60px;
+  border:none;
+  background:linear-gradient(135deg,#e5dbf7,#cbb8ea);
+  font-weight:600;
+  letter-spacing:3px;
+  cursor:pointer;
+  transition:.3s ease;
+}
+.audio-btn.playing{
+  background:linear-gradient(135deg,#c9b3ea,#b39ada);
+}
+
+.footer{
+  text-align:center;
+  margin-top:42px;
+  font-size:11px;
+  letter-spacing:1.5px;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+  <h1>Happy Valentine Tanya Marian</h1>
+  <p>From Charlton</p>
+</div>
+
+<div class="card">
+  <h3>OUR MOMENTS</h3>
+  <div class="rail" id="rail">
+    <img src="tanya1.jpg">
+    <img src="tanya2.jpg">
+    <img src="tanya3.jpg">
+    <img src="tanya4.jpg">
+    <img src="tanya5.jpg">
+    <img src="tanya6.jpg">
+  </div>
+</div>
+
+<div class="card">
+  <h3>A NOTE FOR YOU</h3>
+  <div class="message">
+    Happy Valentine, Tanya Marian.  
+    Loving you feels intentional, steady, and deeply real.  
+    You bring warmth into quiet spaces and light into ordinary days.  
+    I’m grateful for your heart and the future we are shaping together.  
+    Today celebrates us — but most of all, it celebrates you.  
+
+    — Charlton
+  </div>
+</div>
+
+<div class="card">
+  <h3>VOICE MEMORY</h3>
+  <div class="audio-wrap">
+    <button class="audio-btn" id="audioBtn">PLAY</button>
+  </div>
+  <audio id="audio" src="tanya.mp3"></audio>
+</div>
+
+<div class="footer">
+  A memory preserved by WarStreet Experience Model
+</div>
+
+</div>
+
+<script>
+const rail = document.getElementById('rail');
+const images = rail.querySelectorAll('img');
+let index = 0;
+let autoplay;
+
+function scrollToImage(i){
+  const img = images[i];
+  const offset =
+    img.offsetLeft -
+    rail.offsetWidth / 2 +
+    img.offsetWidth / 2;
+
+  rail.scrollTo({ left: offset, behavior: "smooth" });
+}
+
+function startAutoplay(){
+  autoplay = setInterval(() => {
+    scrollToImage(index);
+    index = (index + 1) % images.length;
+  }, 2700);
+}
+
+function stopAutoplay(){
+  clearInterval(autoplay);
+}
+
+rail.addEventListener("touchstart", stopAutoplay);
+rail.addEventListener("mousedown", stopAutoplay);
+rail.addEventListener("touchend", startAutoplay);
+rail.addEventListener("mouseup", startAutoplay);
+
+startAutoplay();
+
+const btn = document.getElementById('audioBtn');
+const audio = document.getElementById('audio');
+let playing = false;
+
+btn.onclick = () => {
+  if(playing){
+    audio.pause();
+    btn.textContent = "PLAY";
+    btn.classList.remove("playing");
+  } else {
+    audio.play();
+    btn.textContent = "PAUSE";
+    btn.classList.add("playing");
+  }
+  playing = !playing;
+};
+</script>
+
+</body>
+</html>
